@@ -70,12 +70,12 @@ namespace AdvancedWarsClone {
             if (gameReference.IsMouseInsideWindow()) {
                 if (playArea.Contains(cursorPos.ToPoint())) {
                     tilePos = cursorPos;
-                    x = ((int)tilePos.X - 20) / 32;
-                    y = ((int)tilePos.Y - 20) / 32;
+                    x = ((int)tilePos.X - 20) / boardReference.unitSize;
+                    y = ((int)tilePos.Y - 20) / boardReference.unitSize;
                     tileIndex.X = x;
                     tileIndex.Y = y;
-                    tilePos.X = x * 32 + 20;
-                    tilePos.Y = y * 32 + 20;
+                    tilePos.X = x * boardReference.unitSize + 20;
+                    tilePos.Y = y * boardReference.unitSize + 20;
                 }
             }
 
@@ -92,17 +92,25 @@ namespace AdvancedWarsClone {
             if (currentState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released) {
 
                 if (!(playArea.Contains(actualPos))) {
-                    if (actualPos.X < 20 && boardReference.OffsetIndexX > 0) { // left
+                    if (gameReference.scrollLeftRect.Contains(actualPos) && boardReference.OffsetIndexX > 0) { // left
                         boardReference.OffsetIndexX--;
+                        if (boardReference.OffsetIndexX == 0) gameReference.boolLeft = false;
+                        gameReference.boolRight = true;
                     }
-                    else if (actualPos.X > gameReference.SizeIndex.X * 32 && boardReference.OffsetIndexX < boardReference.UpperIndex.X - gameReference.SizeIndex.X) { // right 
+                    else if (gameReference.scrollRightRect.Contains(actualPos) && boardReference.OffsetIndexX < boardReference.UpperIndex.X - gameReference.SizeIndex.X) { // right 
                         boardReference.OffsetIndexX++;
+                        if (boardReference.OffsetIndexX == boardReference.UpperIndex.X - gameReference.SizeIndex.X) gameReference.boolRight = false;
+                        gameReference.boolLeft = true;
                     }
-                    if (actualPos.Y < 20 && boardReference.OffsetIndexY > 0) { // up
+                    if (gameReference.scrollUpRect.Contains(actualPos) && boardReference.OffsetIndexY > 0) { // up
                         boardReference.OffsetIndexY--;
+                        if (boardReference.OffsetIndexY == 0) gameReference.boolUp = false;
+                        gameReference.boolDown = true;
                     }
-                    else if (actualPos.Y > gameReference.SizeIndex.Y * 32 && boardReference.OffsetIndexY < boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) {  // down
+                    else if (gameReference.scrollDownRect.Contains(actualPos) && boardReference.OffsetIndexY < boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) {  // down
                         boardReference.OffsetIndexY++;
+                        if (boardReference.OffsetIndexY == boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) gameReference.boolDown = false;
+                        gameReference.boolUp = true;
                     }
                 }
             }// end scroll check

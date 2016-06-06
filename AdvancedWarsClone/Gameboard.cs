@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace AdvancedWarsClone {
     class Gameboard {
         // Private 
-        private int rows = 100;           
-        private int cols = 100;
-        private int unitSize = 32;
+        private int rows = 100;   // this is limited by speed/memory        
+        private int cols = 100;   // 
+        public int unitSize = 32;
         Vector2 upperIndex;
 
         private Game1 game;

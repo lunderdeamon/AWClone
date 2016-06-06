@@ -22,8 +22,9 @@ namespace AdvancedWarsClone {
         Vector2 playSizeIndex;
         Rectangle playArea;
 
-        Rectangle scrollLeftRect, scrollRightRect, scrollUpRect, scrollDownRect;
+        public Rectangle scrollLeftRect, scrollRightRect, scrollUpRect, scrollDownRect;
         Texture2D scrollLeft, scrollRight, scrollUp, scrollDown;
+        public bool boolLeft, boolRight, boolUp, boolDown;
 
         // Constructors
 
@@ -36,7 +37,7 @@ namespace AdvancedWarsClone {
 
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-
+            playerBoard = new Gameboard(this);
 
             //create size 
             TOTALWIDTH = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -65,14 +66,20 @@ namespace AdvancedWarsClone {
 
 
             // create rectangle and index stuff 
-            playSizeIndex = new Vector2(PLAYWIDTH / 32, PLAYHEIGHT / 32);
+            playSizeIndex = new Vector2(PLAYWIDTH / playerBoard.unitSize, PLAYHEIGHT / 32);
             playSize = new Vector2(playSizeIndex.X * 32, playSizeIndex.Y * 32);
-            playArea = new Rectangle(20, 20, PLAYWIDTH - 32, PLAYHEIGHT - 32);
+            playArea = new Rectangle(20, 20, (int)playSize.X, (int)playSize.Y);
 
-            scrollLeftRect = new Rectangle(0, playArea.X, SCROLLSIZE / 2, PLAYHEIGHT);
-            
+            scrollLeftRect = new Rectangle(0, playArea.Y, SCROLLSIZE / 2, playArea.Height);
+            boolLeft = false;
+            scrollRightRect = new Rectangle(playArea.X + playArea.Width, playArea.Y, SCROLLSIZE / 2, playArea.Height);
+            boolRight = true;
+            scrollUpRect = new Rectangle(SCROLLSIZE / 2, 0, playArea.Width, SCROLLSIZE / 2);
+            boolUp = false;
+            scrollDownRect = new Rectangle(SCROLLSIZE / 2, playArea.Y + playArea.Height, playArea.Width, SCROLLSIZE / 2);
+            boolDown = true;
 
-            playerBoard = new Gameboard(this);
+
             cursor = new AwCursor(playerBoard, this, playArea);
 
             base.Initialize();
@@ -85,6 +92,9 @@ namespace AdvancedWarsClone {
             // TODO: use this.Content to load your game content here
             cursor.Image = Content.Load<Texture2D>("cursor");
             scrollLeft = Content.Load<Texture2D>("left");
+            scrollRight = Content.Load<Texture2D>("right");
+            scrollUp = Content.Load<Texture2D>("up");
+            scrollDown = Content.Load<Texture2D>("down");
 
             ContentManager levels = new ContentManager(Content.ServiceProvider, "Levels");
             // more level loading from there            
@@ -116,8 +126,10 @@ namespace AdvancedWarsClone {
             // TODO: Add your drawing code here
 
             spriteBatch.Begin();
-
-            spriteBatch.Draw(scrollLeft, scrollLeftRect, Color.White);
+            if (boolLeft) spriteBatch.Draw(scrollLeft, scrollLeftRect, Color.White);
+            if (boolRight) spriteBatch.Draw(scrollRight, scrollRightRect, Color.White);
+            if (boolUp) spriteBatch.Draw(scrollUp, scrollUpRect, Color.White);
+            if (boolDown) spriteBatch.Draw(scrollDown, scrollDownRect, Color.White);
 
             spriteBatch.End();
 
