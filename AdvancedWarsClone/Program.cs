@@ -25,6 +25,8 @@ namespace AdvancedWarsClone {
 /// 
 /// Make some sort of menu 
 /// 
+/// Make rendering resolution independent
+/// 
 /// Store some level layouts 
 ///     -- design level layouts
 ///     -- create population method that can parse those layouts 

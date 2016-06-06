@@ -7,11 +7,15 @@ namespace AdvancedWarsClone {
          
     public class Game1 : Game {
         // private 
-        const int PLAYWIDTH = 1024; //use these to change size of main window 
-        const int PLAYHEIGHT = 512; //
+        const int PLAYWIDTH = 32 * 32; //use these to change size of terrain window
+        const int PLAYHEIGHT = 16 * 32; //
 
-        const int TOTALWIDTH = PLAYWIDTH + 40;
-        const int TOTALHEIGHT = PLAYHEIGHT + 40;
+        const int SCROLLSIZE = 40; //size of scroll areas
+
+        const int SIDEBARSIZE = 500; //size of the game sidebar
+
+        const int TOTALWIDTH = PLAYWIDTH + SCROLLSIZE + SIDEBARSIZE;
+        const int TOTALHEIGHT = PLAYHEIGHT + SCROLLSIZE;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;

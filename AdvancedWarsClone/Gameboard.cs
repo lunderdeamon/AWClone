@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace AdvancedWarsClone {
     class Gameboard {
         // Private 
-        private int rows = 30;           // This is currently resolution dependent and does not extend pass the 
+        private int rows = 30;           
         private int cols = 50;
         private int unitSize = 32;
         Vector2 upperIndex;
@@ -18,17 +18,22 @@ namespace AdvancedWarsClone {
 
         Vector2 offsetIndex;
 
+        Rectangle[] scrollList;
+        enum directions { left, right, up, down };  // Just dupe this where needed 
+        directions scrollDirections;                //
+
         enum tags { city, grass, mount, road, water };// enum-ed tags to allow random determination of terrain tile 
 
 
         // Constructors
         public Gameboard(Game1 game1) {
+           
+            game = game1;//store game reference 
+
+            //grid shits, need to do unit grid- fill with "empty" units 
             upperIndex = new Vector2(cols, rows);
 
-            game = game1;
-
-            offsetIndex = new Vector2();
-            
+            offsetIndex = new Vector2();           
 
             terrainGrid = new Terrain[cols, rows];
             unitGrid = new Unit[cols, rows];
@@ -53,8 +58,12 @@ namespace AdvancedWarsClone {
                     terrainGrid[i, j].Texture = game1.Content.Load<Texture2D>(terrainGrid[i, j].Tag);        
                 }
             }
+
+            //define scroll areas
+
         }
         // Public
+        #region Public Properties
         public Terrain[,] TerrainGrid {
             get { return terrainGrid; }
         }
@@ -78,14 +87,20 @@ namespace AdvancedWarsClone {
             get { return upperIndex; }
             set { upperIndex = value; }
         }
+        #endregion
 
         // Methods 
         public void Draw(SpriteBatch spriteBatch) {
-            for (int i = 0; i < game.SizeIndex.X; i++) {
+            for (int i = 0; i < game.SizeIndex.X; i++) { // draw grids 
                 for (int j = 0; j < game.SizeIndex.Y; j++) {
                     terrainGrid[i + (int)offsetIndex.X, j + (int)offsetIndex.Y].Draw(spriteBatch, i,j);
                 }
             }
+
+            //end draw grids 
+
+            //draw scroll areas
+
         }
 
     }
