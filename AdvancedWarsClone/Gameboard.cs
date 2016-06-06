@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace AdvancedWarsClone {
     class Gameboard {
         // Private 
-        private int rows = 30;           
-        private int cols = 50;
+        private int rows = 100;           
+        private int cols = 100;
         private int unitSize = 32;
         Vector2 upperIndex;
 
@@ -17,10 +17,6 @@ namespace AdvancedWarsClone {
         Unit[,] unitGrid;
 
         Vector2 offsetIndex;
-
-        Rectangle[] scrollList;
-        enum directions { left, right, up, down };  // Just dupe this where needed 
-        directions scrollDirections;                //
 
         enum tags { city, grass, mount, road, water };// enum-ed tags to allow random determination of terrain tile 
 
@@ -58,8 +54,6 @@ namespace AdvancedWarsClone {
                     terrainGrid[i, j].Texture = game1.Content.Load<Texture2D>(terrainGrid[i, j].Tag);        
                 }
             }
-
-            //define scroll areas
 
         }
         // Public
