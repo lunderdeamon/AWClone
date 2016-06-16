@@ -22,7 +22,7 @@ namespace AdvancedWarsClone {
 
         Rectangle playArea;
 
-        Texture2D DebugTex;
+        public Texture2D DebugTex;
         Vector2 actualPos;
 
 
@@ -91,7 +91,12 @@ namespace AdvancedWarsClone {
             //create a menu if there are multiple options 
             if (currentState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released) {
 
-                if (!(playArea.Contains(actualPos))) {
+                if (!(playArea.Contains(actualPos))) { //if the cursor is not on a play tile 
+                    //if (gameReference.sideBoard.Contains(actualPos)) {
+                    //    // if the cursor is in the side board
+                    //}                  
+
+                    //if you are scrolling 
                     if (gameReference.scrollLeftRect.Contains(actualPos) && boardReference.OffsetIndexX > 0) { // left
                         boardReference.OffsetIndexX--;
                         if (boardReference.OffsetIndexX == 0) gameReference.boolLeft = false;
@@ -113,8 +118,10 @@ namespace AdvancedWarsClone {
                         gameReference.boolUp = true;
                     }
                 }
-            }// end scroll check
+            }// end click on non tile 
 
+
+            //click on tile
 
         }
 
@@ -123,7 +130,7 @@ namespace AdvancedWarsClone {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             spriteBatch.Draw(image, cursorPos);
-            spriteBatch.Draw(image, actualPos);
+            spriteBatch.Draw(DebugTex, actualPos);
 
             spriteBatch.End();
         }

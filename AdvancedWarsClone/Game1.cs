@@ -7,7 +7,7 @@ namespace AdvancedWarsClone {
          
     public class Game1 : Game {
 
-        int TOTALWIDTH, TOTALHEIGHT , SCROLLSIZE, PLAYWIDTH, PLAYHEIGHT, SIDEBARSIZE; //size of the game sidebar
+        int TOTALWIDTH, TOTALHEIGHT , SCROLLSIZE, PLAYWIDTH, PLAYHEIGHT, SIDEBARSIZEX, SIDEBARSIZEY, MENUBAR; //size shits
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -18,6 +18,20 @@ namespace AdvancedWarsClone {
 
         MainMenu mainMenu;
 
+        SideBoard sideBoard;
+        Texture2D sideBarTex;
+        public Rectangle sideBoardArea;
+
+        Texture2D cursorStatus;
+        Rectangle cursorStatusArea;
+
+        Texture2D COstatus;
+        Rectangle COstatusArea;
+
+        Texture2D OpCOstatus;
+        Rectangle OpCOstatusArea;
+
+
         Vector2 playSize;
         Vector2 playSizeIndex;
         Rectangle playArea;
@@ -25,6 +39,7 @@ namespace AdvancedWarsClone {
         public Rectangle scrollLeftRect, scrollRightRect, scrollUpRect, scrollDownRect;
         Texture2D scrollLeft, scrollRight, scrollUp, scrollDown;
         public bool boolLeft, boolRight, boolUp, boolDown;
+
 
         // Constructors
 
@@ -41,14 +56,18 @@ namespace AdvancedWarsClone {
 
             //create size 
             TOTALWIDTH = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            TOTALHEIGHT = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            TOTALHEIGHT = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //full screen
+
+            //TOTALWIDTH = 1000;
+            //TOTALHEIGHT = 1000;
 
             SCROLLSIZE = 40; //size of scroll areas
 
             PLAYWIDTH = ((TOTALWIDTH / 3) * 2) - SCROLLSIZE; //use these to change size of terrain window
             PLAYHEIGHT = TOTALHEIGHT - SCROLLSIZE; //
 
-            SIDEBARSIZE = 500; //size of the game sidebar
+            SIDEBARSIZEX = TOTALWIDTH - PLAYWIDTH - SCROLLSIZE; //size of the game sidebar
+            SIDEBARSIZEY = TOTALHEIGHT - SCROLLSIZE;
 
             //end create size
 
@@ -66,10 +85,12 @@ namespace AdvancedWarsClone {
 
 
             // create rectangle and index stuff 
+            //Play area
             playSizeIndex = new Vector2(PLAYWIDTH / playerBoard.unitSize, PLAYHEIGHT / 32);
             playSize = new Vector2(playSizeIndex.X * 32, playSizeIndex.Y * 32);
             playArea = new Rectangle(20, 20, (int)playSize.X, (int)playSize.Y);
 
+            //Scroll areas
             scrollLeftRect = new Rectangle(0, playArea.Y, SCROLLSIZE / 2, playArea.Height);
             boolLeft = false;
             scrollRightRect = new Rectangle(playArea.X + playArea.Width, playArea.Y, SCROLLSIZE / 2, playArea.Height);
@@ -79,6 +100,8 @@ namespace AdvancedWarsClone {
             scrollDownRect = new Rectangle(SCROLLSIZE / 2, playArea.Y + playArea.Height, playArea.Width, SCROLLSIZE / 2);
             boolDown = true;
 
+            //Sideboard
+            sideBoardArea = new Rectangle(PLAYWIDTH + SCROLLSIZE / 2, SCROLLSIZE / 2, SIDEBARSIZEX, SIDEBARSIZEY);
 
             cursor = new AwCursor(playerBoard, this, playArea);
 
@@ -95,6 +118,9 @@ namespace AdvancedWarsClone {
             scrollRight = Content.Load<Texture2D>("right");
             scrollUp = Content.Load<Texture2D>("up");
             scrollDown = Content.Load<Texture2D>("down");
+            cursor.DebugTex = Content.Load<Texture2D>("debugcursor");
+
+            sideBarTex = Content.Load<Texture2D>("outline");
 
             ContentManager levels = new ContentManager(Content.ServiceProvider, "Levels");
             // more level loading from there            
@@ -130,6 +156,8 @@ namespace AdvancedWarsClone {
             if (boolRight) spriteBatch.Draw(scrollRight, scrollRightRect, Color.White);
             if (boolUp) spriteBatch.Draw(scrollUp, scrollUpRect, Color.White);
             if (boolDown) spriteBatch.Draw(scrollDown, scrollDownRect, Color.White);
+
+            spriteBatch.Draw(sideBarTex, sideBoardArea, Color.Red);
 
             spriteBatch.End();
 
