@@ -33,7 +33,8 @@ namespace AdvancedWarsClone {
 /// ^^^ Some sort of map creator that can save to a file 
 ///  
 /// Fully flesh out the terrain and unit classes 
-///     -- get all the images aligned correctly
+///     -- Make a method that looks at surrounding tiles and gives the proper tile 
+///     
 /// 
 /// Crate some sort of cursor and select menu
 ///     -- make sure to display empty unit spots as some sort of empty to prevent null errors 

@@ -22,7 +22,7 @@ namespace AdvancedWarsClone {
 
         Rectangle playArea;
 
-        Texture2D DebugTex;
+        public Texture2D DebugTex;
         Vector2 actualPos;
 
 
@@ -70,12 +70,12 @@ namespace AdvancedWarsClone {
             if (gameReference.IsMouseInsideWindow()) {
                 if (playArea.Contains(cursorPos.ToPoint())) {
                     tilePos = cursorPos;
-                    x = ((int)tilePos.X - 20) / 32;
-                    y = ((int)tilePos.Y - 20) / 32;
+                    x = ((int)tilePos.X - 20) / boardReference.unitSize;
+                    y = ((int)tilePos.Y - 20) / boardReference.unitSize;
                     tileIndex.X = x;
                     tileIndex.Y = y;
-                    tilePos.X = x * 32 + 20;
-                    tilePos.Y = y * 32 + 20;
+                    tilePos.X = x * boardReference.unitSize + 20;
+                    tilePos.Y = y * boardReference.unitSize + 20;
                 }
             }
 
@@ -91,22 +91,37 @@ namespace AdvancedWarsClone {
             //create a menu if there are multiple options 
             if (currentState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released) {
 
-                if (!(playArea.Contains(actualPos))) {
-                    if (actualPos.X < 20 && boardReference.OffsetIndexX > 0) { // left
+                if (!(playArea.Contains(actualPos))) { //if the cursor is not on a play tile 
+                    //if (gameReference.sideBoard.Contains(actualPos)) {
+                    //    // if the cursor is in the side board
+                    //}                  
+
+                    //if you are scrolling 
+                    if (gameReference.PlayUI.scrollLeftRect.Contains(actualPos) && boardReference.OffsetIndexX > 0) { // left
                         boardReference.OffsetIndexX--;
+                        if (boardReference.OffsetIndexX == 0) gameReference.PlayUI.boolLeft = false;
+                        gameReference.PlayUI.boolRight = true;
                     }
-                    else if (actualPos.X > gameReference.SizeIndex.X * 32 && boardReference.OffsetIndexX < boardReference.UpperIndex.X - gameReference.SizeIndex.X) { // right 
+                    else if (gameReference.PlayUI.scrollRightRect.Contains(actualPos) && boardReference.OffsetIndexX < boardReference.UpperIndex.X - gameReference.SizeIndex.X) { // right 
                         boardReference.OffsetIndexX++;
+                        if (boardReference.OffsetIndexX == boardReference.UpperIndex.X - gameReference.SizeIndex.X) gameReference.PlayUI.boolRight = false;
+                        gameReference.PlayUI.boolLeft = true;
                     }
-                    if (actualPos.Y < 20 && boardReference.OffsetIndexY > 0) { // up
+                    if (gameReference.PlayUI.scrollUpRect.Contains(actualPos) && boardReference.OffsetIndexY > 0) { // up
                         boardReference.OffsetIndexY--;
+                        if (boardReference.OffsetIndexY == 0) gameReference.PlayUI.boolUp = false;
+                        gameReference.PlayUI.boolDown = true;
                     }
-                    else if (actualPos.Y > gameReference.SizeIndex.Y * 32 && boardReference.OffsetIndexY < boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) {  // down
+                    else if (gameReference.PlayUI.scrollDownRect.Contains(actualPos) && boardReference.OffsetIndexY < boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) {  // down
                         boardReference.OffsetIndexY++;
+                        if (boardReference.OffsetIndexY == boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) gameReference.PlayUI.boolDown = false;
+                        gameReference.PlayUI.boolUp = true;
                     }
                 }
-            }// end scroll check
+            }// end click on non tile 
 
+
+            //click on tile
 
         }
 
@@ -115,7 +130,7 @@ namespace AdvancedWarsClone {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             spriteBatch.Draw(image, cursorPos);
-            spriteBatch.Draw(image, actualPos);
+            spriteBatch.Draw(DebugTex, actualPos);
 
             spriteBatch.End();
         }

@@ -9,7 +9,7 @@ namespace AdvancedWarsClone {
 
         }
 
-        public Unit(Point point, string tag) : base (point, tag) {
+        public Unit (Point point, string tag, PlaytimeUI uireference) : base (point, tag, uireference) {
 
         }
         // Public

@@ -41,6 +41,7 @@
     <Compile Include="AwCursor.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Gameboard.cs" />
+    <Compile Include="GameStatus%27s.cs" />
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +57,7 @@
     </Compile>
     <Compile Include="Terrain.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="PlaytimeUI.cs" />
     <Compile Include="Unit.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +96,7 @@
     <MonoGameContentReference Include="Levels\Levels.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\UI\PlaytimeUI\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

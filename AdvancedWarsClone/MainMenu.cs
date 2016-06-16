@@ -11,7 +11,7 @@ namespace AdvancedWarsClone {
         private void PlaceTroops_Click(object sender, EventArgs e) {
 
         }
-        public void Update(Vector2 position, String tag, Vector2 offset) {
+        public void Update(Vector2 position, String tag, Vector2 offset, Rectangle playArea, Vector2 totalSize, Vector2 playIndex) {
             lblCursorPos.Text = "Cursor Pos: " + position.ToString();
             Vector2 tilePos = position;
 
@@ -30,6 +30,11 @@ namespace AdvancedWarsClone {
 
             lblTileOffset.Text = "Tile Offset: " + offset.ToString();
             lblTileIndex.Text = "Tile Index: " + tileIndex.ToString();
+
+            lblPlayArea.Text = "Play Area: " + playArea.ToString();
+            lblTotalSize.Text = "Total Size: " + totalSize.ToString();
+
+            lblPlayIndexSize.Text = "Play Index Size: " + playIndex.ToString();
         }    
     }
 }
