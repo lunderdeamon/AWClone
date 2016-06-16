@@ -6,40 +6,18 @@ using Microsoft.Xna.Framework.Content;
 namespace AdvancedWarsClone {
          
     public class Game1 : Game {
-
-        int TOTALWIDTH, TOTALHEIGHT , SCROLLSIZE, PLAYWIDTH, PLAYHEIGHT, SIDEBARSIZEX, SIDEBARSIZEY, MENUBAR; //size shits
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
 
         Gameboard playerBoard;
         AwCursor cursor;
         MouseState mousePos;
+        PlaytimeUI PlayUI;
 
         MainMenu mainMenu;
 
-        SideBoard sideBoard;
-        Texture2D sideBarTex;
-        public Rectangle sideBoardArea;
-
-        Texture2D cursorStatus;
-        Rectangle cursorStatusArea;
-
-        Texture2D COstatus;
-        Rectangle COstatusArea;
-
-        Texture2D OpCOstatus;
-        Rectangle OpCOstatusArea;
-
-
-        Vector2 playSize;
-        Vector2 playSizeIndex;
-        Rectangle playArea;
-
-        public Rectangle scrollLeftRect, scrollRightRect, scrollUpRect, scrollDownRect;
-        Texture2D scrollLeft, scrollRight, scrollUp, scrollDown;
-        public bool boolLeft, boolRight, boolUp, boolDown;
-
+        int TOTALWIDTH, TOTALHEIGHT;
 
         // Constructors
 
@@ -52,24 +30,13 @@ namespace AdvancedWarsClone {
 
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            playerBoard = new Gameboard(this);
+            playerBoard = new Gameboard(this);            
 
             //create size 
             TOTALWIDTH = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             TOTALHEIGHT = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //full screen
 
-            //TOTALWIDTH = 1000;
-            //TOTALHEIGHT = 1000;
-
-            SCROLLSIZE = 40; //size of scroll areas
-
-            PLAYWIDTH = ((TOTALWIDTH / 3) * 2) - SCROLLSIZE; //use these to change size of terrain window
-            PLAYHEIGHT = TOTALHEIGHT - SCROLLSIZE; //
-
-            SIDEBARSIZEX = TOTALWIDTH - PLAYWIDTH - SCROLLSIZE; //size of the game sidebar
-            SIDEBARSIZEY = TOTALHEIGHT - SCROLLSIZE;
-
-            //end create size
+            PlayUI = new PlaytimeUI(TOTALWIDTH, TOTALHEIGHT, this);
 
             //create window
             graphics.IsFullScreen = true;
@@ -83,26 +50,7 @@ namespace AdvancedWarsClone {
             mainMenu.Show();
             // end window
 
-
-            // create rectangle and index stuff 
-            //Play area
-            playSizeIndex = new Vector2(PLAYWIDTH / playerBoard.unitSize, PLAYHEIGHT / 32);
-            playSize = new Vector2(playSizeIndex.X * 32, playSizeIndex.Y * 32);
-            playArea = new Rectangle(20, 20, (int)playSize.X, (int)playSize.Y);
-
-            //Scroll areas
-            scrollLeftRect = new Rectangle(0, playArea.Y, SCROLLSIZE / 2, playArea.Height);
-            boolLeft = false;
-            scrollRightRect = new Rectangle(playArea.X + playArea.Width, playArea.Y, SCROLLSIZE / 2, playArea.Height);
-            boolRight = true;
-            scrollUpRect = new Rectangle(SCROLLSIZE / 2, 0, playArea.Width, SCROLLSIZE / 2);
-            boolUp = false;
-            scrollDownRect = new Rectangle(SCROLLSIZE / 2, playArea.Y + playArea.Height, playArea.Width, SCROLLSIZE / 2);
-            boolDown = true;
-
-            //Sideboard
-            sideBoardArea = new Rectangle(PLAYWIDTH + SCROLLSIZE / 2, SCROLLSIZE / 2, SIDEBARSIZEX, SIDEBARSIZEY);
-
+            //Cursor
             cursor = new AwCursor(playerBoard, this, playArea);
 
             base.Initialize();
@@ -114,13 +62,8 @@ namespace AdvancedWarsClone {
 
             // TODO: use this.Content to load your game content here
             cursor.Image = Content.Load<Texture2D>("cursor");
-            scrollLeft = Content.Load<Texture2D>("left");
-            scrollRight = Content.Load<Texture2D>("right");
-            scrollUp = Content.Load<Texture2D>("up");
-            scrollDown = Content.Load<Texture2D>("down");
+            
             cursor.DebugTex = Content.Load<Texture2D>("debugcursor");
-
-            sideBarTex = Content.Load<Texture2D>("outline");
 
             ContentManager levels = new ContentManager(Content.ServiceProvider, "Levels");
             // more level loading from there            
@@ -151,16 +94,7 @@ namespace AdvancedWarsClone {
 
             // TODO: Add your drawing code here
 
-            spriteBatch.Begin();
-            if (boolLeft) spriteBatch.Draw(scrollLeft, scrollLeftRect, Color.White);
-            if (boolRight) spriteBatch.Draw(scrollRight, scrollRightRect, Color.White);
-            if (boolUp) spriteBatch.Draw(scrollUp, scrollUpRect, Color.White);
-            if (boolDown) spriteBatch.Draw(scrollDown, scrollDownRect, Color.White);
-
-            spriteBatch.Draw(sideBarTex, sideBoardArea, Color.Red);
-
-            spriteBatch.End();
-
+            PlayUI.Draw(spriteBatch);
             playerBoard.Draw(spriteBatch);
             cursor.Draw(spriteBatch);           
 
@@ -175,6 +109,10 @@ namespace AdvancedWarsClone {
         public Vector2 SizeIndex {
             get { return playSizeIndex; }
         }
+        public Gameboard PlayerBoard {
+            get { return playerBoard; }
+        }
+
         // Other Methods
 
         public void MainMenuAlign() {

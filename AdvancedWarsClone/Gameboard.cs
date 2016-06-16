@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AdvancedWarsClone {
-    class Gameboard {
+    public class Gameboard {
         // Private 
         private int rows = 100;   // this is limited by speed/memory        
         private int cols = 100;   // 
