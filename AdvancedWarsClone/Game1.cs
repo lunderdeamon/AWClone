@@ -13,7 +13,7 @@ namespace AdvancedWarsClone {
         Gameboard playerBoard;
         AwCursor cursor;
         MouseState mousePos;
-        PlaytimeUI PlayUI;
+        PlaytimeUI playUI;
 
         MainMenu mainMenu;
 
@@ -36,7 +36,9 @@ namespace AdvancedWarsClone {
             TOTALWIDTH = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             TOTALHEIGHT = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //full screen
 
-            PlayUI = new PlaytimeUI(TOTALWIDTH, TOTALHEIGHT, this);
+            playUI = new PlaytimeUI(TOTALWIDTH, TOTALHEIGHT, this);
+
+            playerBoard.RefUI();
 
             //create window
             graphics.IsFullScreen = true;
@@ -51,7 +53,7 @@ namespace AdvancedWarsClone {
             // end window
 
             //Cursor
-            cursor = new AwCursor(playerBoard, this, playArea);
+            cursor = new AwCursor(playerBoard, this, PlayUI.PlayArea);
 
             base.Initialize();
         }
@@ -83,7 +85,7 @@ namespace AdvancedWarsClone {
             mousePos = Mouse.GetState();                            //
             Vector2 cursorPos = new Vector2(mousePos.X, mousePos.Y);    // these two lines are to get current mouse position and convert it to point
             Vector2 totalSize = new Vector2(TOTALWIDTH, TOTALHEIGHT);
-            mainMenu.Update(cursorPos, cursor.CurrentTileTag, playerBoard.OffsetIndex, playArea, totalSize, playSizeIndex);
+            mainMenu.Update(cursorPos, cursor.CurrentTileTag, playerBoard.OffsetIndex, PlayUI.PlayArea, totalSize, PlayUI.SizeIndex);
 
 
             base.Update(gameTime);
@@ -104,13 +106,16 @@ namespace AdvancedWarsClone {
 
         // Public 
         public Vector2 Size {
-            get { return playSize; }
+            get { return PlayUI.Size; }
         }
         public Vector2 SizeIndex {
-            get { return playSizeIndex; }
+            get { return PlayUI.SizeIndex; }
         }
         public Gameboard PlayerBoard {
             get { return playerBoard; }
+        }
+        public PlaytimeUI PlayUI {
+            get { return playUI; }
         }
 
         // Other Methods

@@ -97,25 +97,25 @@ namespace AdvancedWarsClone {
                     //}                  
 
                     //if you are scrolling 
-                    if (gameReference.scrollLeftRect.Contains(actualPos) && boardReference.OffsetIndexX > 0) { // left
+                    if (gameReference.PlayUI.scrollLeftRect.Contains(actualPos) && boardReference.OffsetIndexX > 0) { // left
                         boardReference.OffsetIndexX--;
-                        if (boardReference.OffsetIndexX == 0) gameReference.boolLeft = false;
-                        gameReference.boolRight = true;
+                        if (boardReference.OffsetIndexX == 0) gameReference.PlayUI.boolLeft = false;
+                        gameReference.PlayUI.boolRight = true;
                     }
-                    else if (gameReference.scrollRightRect.Contains(actualPos) && boardReference.OffsetIndexX < boardReference.UpperIndex.X - gameReference.SizeIndex.X) { // right 
+                    else if (gameReference.PlayUI.scrollRightRect.Contains(actualPos) && boardReference.OffsetIndexX < boardReference.UpperIndex.X - gameReference.SizeIndex.X) { // right 
                         boardReference.OffsetIndexX++;
-                        if (boardReference.OffsetIndexX == boardReference.UpperIndex.X - gameReference.SizeIndex.X) gameReference.boolRight = false;
-                        gameReference.boolLeft = true;
+                        if (boardReference.OffsetIndexX == boardReference.UpperIndex.X - gameReference.SizeIndex.X) gameReference.PlayUI.boolRight = false;
+                        gameReference.PlayUI.boolLeft = true;
                     }
-                    if (gameReference.scrollUpRect.Contains(actualPos) && boardReference.OffsetIndexY > 0) { // up
+                    if (gameReference.PlayUI.scrollUpRect.Contains(actualPos) && boardReference.OffsetIndexY > 0) { // up
                         boardReference.OffsetIndexY--;
-                        if (boardReference.OffsetIndexY == 0) gameReference.boolUp = false;
-                        gameReference.boolDown = true;
+                        if (boardReference.OffsetIndexY == 0) gameReference.PlayUI.boolUp = false;
+                        gameReference.PlayUI.boolDown = true;
                     }
-                    else if (gameReference.scrollDownRect.Contains(actualPos) && boardReference.OffsetIndexY < boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) {  // down
+                    else if (gameReference.PlayUI.scrollDownRect.Contains(actualPos) && boardReference.OffsetIndexY < boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) {  // down
                         boardReference.OffsetIndexY++;
-                        if (boardReference.OffsetIndexY == boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) gameReference.boolDown = false;
-                        gameReference.boolUp = true;
+                        if (boardReference.OffsetIndexY == boardReference.UpperIndex.Y - gameReference.SizeIndex.Y) gameReference.PlayUI.boolDown = false;
+                        gameReference.PlayUI.boolUp = true;
                     }
                 }
             }// end click on non tile 

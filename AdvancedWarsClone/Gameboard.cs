@@ -23,13 +23,13 @@ namespace AdvancedWarsClone {
 
         // Constructors
         public Gameboard(Game1 game1) {
-           
+
             game = game1;//store game reference 
 
             //grid shits, need to do unit grid- fill with "empty" units 
             upperIndex = new Vector2(cols, rows);
 
-            offsetIndex = new Vector2();           
+            offsetIndex = new Vector2();
 
             terrainGrid = new Terrain[cols, rows];
             unitGrid = new Unit[cols, rows];
@@ -50,8 +50,7 @@ namespace AdvancedWarsClone {
                     terrainGrid[i, j].Tag = "outline";// in case something fails and a tag cannot be generated
                     tags myTag = (tags)rand.Next(0, 5); // this is temporary code 
                     terrainGrid[i, j].Tag = myTag.ToString();// the tag of the tile needs to be known by this point!! figure out some sort of level loading 
-
-                    terrainGrid[i, j].Texture = game1.Content.Load<Texture2D>(terrainGrid[i, j].Tag);        
+                    terrainGrid[i, j].Texture = game1.Content.Load<Texture2D>(terrainGrid[i, j].Tag);
                 }
             }
 
@@ -87,7 +86,7 @@ namespace AdvancedWarsClone {
         public void Draw(SpriteBatch spriteBatch) {
             for (int i = 0; i < game.SizeIndex.X; i++) { // draw grids 
                 for (int j = 0; j < game.SizeIndex.Y; j++) {
-                    terrainGrid[i + (int)offsetIndex.X, j + (int)offsetIndex.Y].Draw(spriteBatch, i,j);
+                    terrainGrid[i + (int)offsetIndex.X, j + (int)offsetIndex.Y].Draw(spriteBatch, i, j);
                 }
             }
 
@@ -95,6 +94,14 @@ namespace AdvancedWarsClone {
 
             //draw scroll areas
 
+        }//end draw
+
+        public void RefUI() {
+            for (int i = 0; i < cols; i++) {
+                for (int j = 0; j < rows; j++) {
+                    terrainGrid[i, j].UIRef = game.PlayUI;
+                }
+            }
         }
 
     }

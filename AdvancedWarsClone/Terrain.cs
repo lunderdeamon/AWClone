@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 namespace AdvancedWarsClone {
-    class Terrain : Tile{
+    public class Terrain : Tile{
         // Private 
 
         // Constructors
@@ -9,7 +9,7 @@ namespace AdvancedWarsClone {
 
         }
 
-        public Terrain(Point point, string tag) : base (point, tag) {
+        public Terrain(Point point, string tag, PlaytimeUI uireference) : base (point, tag, uireference) {
 
         }
         // Public

@@ -2,19 +2,22 @@
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AdvancedWarsClone {
-    class Tile {
+    public class Tile {
         // Private 
         private Point position;
         private string tag;
         private Texture2D texture;
         private int size = 32;
 
+        PlaytimeUI uiRef;
+
         // Constructors
         public Tile() {
 
         }
 
-        public Tile(Point point, string tag) {
+        public Tile(Point point, string tag, PlaytimeUI uireference) {
+            uiRef = uireference;
             Position = point;
             Tag = tag;
         }
@@ -47,7 +50,10 @@ namespace AdvancedWarsClone {
             }
         }
 
-        public string Tag { get; set; }
+        public string Tag {
+            get { return tag; }
+            set { tag = value; }
+        }
 
         public Texture2D Texture {
             get {
@@ -63,11 +69,16 @@ namespace AdvancedWarsClone {
             set { size = value; }
         }
 
+        public PlaytimeUI UIRef {
+            get { return uiRef; }
+            set { uiRef = value; }
+        }
+
         // Methods 
         public void Draw(SpriteBatch spriteBatch, int xPos, int yPos) {
             Point SizePoint = new Point(size);
-            position.X = (xPos * 32) + 20;
-            position.Y = (yPos * 32) + 20;
+            position.X = (xPos * size) + uiRef.ScrollSize / 2;
+            position.Y = (yPos * size) + uiRef.ScrollSize / 2 + uiRef.MenuBarSize + 32;
             Rectangle destinationRect = new Rectangle(Position,SizePoint);
 
             spriteBatch.Begin();
