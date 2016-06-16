@@ -89,9 +89,6 @@ namespace AdvancedWarsClone {
             //Cursor Status 
             cursorStatusArea = sideBoardArea;
             cursorStatusArea.Height = (cursorStatusArea.Height * 2) / 3;
-            cursorStatusArea.Width -= 20;
-            cursorStatusArea.X += 10;
-            cursorStatusArea.Y += 10;
 
         }
 
@@ -118,7 +115,7 @@ namespace AdvancedWarsClone {
             scrollUp = playtimeUIContent.Load<Texture2D>("up");
             scrollDown = playtimeUIContent.Load<Texture2D>("down");
             
-            sideBar = playtimeUIContent.Load<Texture2D>("outline");
+            sideBar = playtimeUIContent.Load<Texture2D>("cursorstatus");
             menuBar = playtimeUIContent.Load<Texture2D>("outline");
             cursorStatus = playtimeUIContent.Load<Texture2D>("cursorstatus");
         }
